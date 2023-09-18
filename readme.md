@@ -32,7 +32,7 @@ Before you begin, ensure you've completed the following steps:
 
 For regular testing:
 
-- Run `play_roulette.py` periodically. This will simulate a roulette game, placing a bet on RED using 1 CAS for all addresses.
+- Run `play_roulette.py` periodically. This will simulate a roulette game, placing a bet on BLACK using 1 CAS for all addresses.
 
 
 ## Note
