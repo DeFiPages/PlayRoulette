@@ -12,13 +12,8 @@ class Color(Enum):
     
 
 def play_roulette(address, private_key):
-
-    
-
-    
     nonce = w3.eth.get_transaction_count(address, 'pending')
-    print(f"nonce pending {nonce}")
-
+#    print(f"nonce pending {nonce}")
     selectedColor = Color.BLACK.value
     tokensBet = 1  # Or whatever value you have
     if get_balance_cas(address) < tokensBet:
