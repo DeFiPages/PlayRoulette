@@ -33,3 +33,8 @@ Before you begin, ensure you've completed the following steps:
 For regular testing:
 
 - Run `play_roulette.py` periodically. This will simulate a roulette game, placing a bet on RED using 1 CAS for all addresses.
+
+
+## Note
+
+The EVM RPC URL is set in `libs/eth_utils.py` to `https://testnet-dmc.mydefichain.com:20551`. Alternatives include other public URLs or the local port: `http://127.0.0.1:20551`.
