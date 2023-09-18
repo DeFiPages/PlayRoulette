@@ -27,9 +27,9 @@ roulette_address = json.loads(file_contents["RouletteAddress"])["address"]
 dst20_abi = json.loads(file_contents["DST20Abi"])
 
 # Initialize web3 connection, choose a provider
-provider='https://changinode1.defiserver.de'
-#provider = 'http://127.0.0.1:20551'
-provider='https://testnet-dmc.mydefichain.com:20551' 
+#provider='https://changinode1.defiserver.de'
+#provider='https://testnet-dmc.mydefichain.com:20551' 
+provider = 'http://127.0.0.1:20551'
 w3 = Web3(Web3.HTTPProvider(provider))
 
 # Get the token addresses from the casino contract
