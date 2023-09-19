@@ -61,7 +61,7 @@ All eth accounts must have 2 DFI for gas and 1000 CAS Token to play.
 
 In crontab -e append to run hourly:
 
-42 * * * * /bin/bash -c 'date;cd ~/PlayRoulette && source venv/bin/activate && python3 play_roulette.py'  >> ~/play_roulette.log 2>&1
+`42 * * * * /bin/bash -c 'date;cd ~/PlayRoulette && source venv/bin/activate && python3 play_roulette.py'  >> ~/play_roulette.log 2>&1`
 
 Check that the full path `~/PlayRoulette/venv/bin/activate` is correct.
 
