@@ -37,4 +37,32 @@ For regular testing:
 
 ## Note
 
-The EVM RPC URL is set in `libs/eth_utils.py` to `https://testnet-dmc.mydefichain.com:20551`. Alternatives include other public URLs or the local port: `http://127.0.0.1:20551`.
+The EVM RPC URL is set in `libs/eth_utils.py` to the local port: `http://127.0.0.1:20551`.
+
+Alternatives include public URLs like `https://testnet-dmc.mydefichain.com:20551`
+But to many requests can results to the error:
+`HTTPError: 429 Client Error: Too Many Requests for url: https://testnet-dmc.mydefichain.com:20551/`
+
+## Run with crontab at the changi node
+
+Clone source and install requirements
+
+```{python}
+git clone https://github.com/DeFiPages/PlayRoulette.git
+cd PlayRoulette
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
+
+```
+Execute tasks in [Prerequisites](#prerequisites)
+
+All eth accounts must have 2 DFI for gas and 1000 CAS Token to play.
+
+In crontab -e append to run hourly:
+
+42 * * * * /bin/bash -c 'date;cd ~/PlayRoulette && source venv/bin/activate && python3 play_roulette.py'  >> ~/play_roulette.log 2>&1
+
+Check that the full path `~/PlayRoulette/venv/bin/activate` is correct.
+
+
