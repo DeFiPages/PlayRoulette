@@ -1,5 +1,5 @@
 from libs.read_accounts import read_accounts_from_csv
-from libs.eth_utils import w3, dusd_contract, casino_contract, casino_address, get_balance_dusd, create_and_send_transaction
+from libs.my_eth_utils import w3, dusd_contract, casino_contract, casino_address, get_balance_dusd, create_and_send_transaction
 
 
 

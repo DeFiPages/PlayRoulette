@@ -37,7 +37,7 @@ For regular testing:
 
 ## Note
 
-The EVM RPC URL is set in `libs/eth_utils.py` to the local port: `http://127.0.0.1:20551`.
+The EVM RPC URL is set in `libs/my_eth_utils.py` to the local port: `http://127.0.0.1:20551`.
 
 Alternatives include public URLs like `https://testnet-dmc.mydefichain.com:20551`
 But to many requests can results to the error:

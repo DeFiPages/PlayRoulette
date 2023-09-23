@@ -1,7 +1,7 @@
 import os
 from defichain import Node
 from libs.read_accounts import read_accounts_from_csv
-from libs.eth_utils import get_balance_dfi, get_balance_dusd
+from libs.my_eth_utils import get_balance_dfi, get_balance_dusd
 from libs.rpc_call import transferdomain
 
 

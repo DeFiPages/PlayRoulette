@@ -82,3 +82,20 @@ def create_and_send_transaction(contract, fn_name, args, address, private_key, n
         print(f"Error for {fn_name}: {e}")
         return None
     
+def create_signed_transaction(contract, fn_name, args, address, private_key, nonce, gas_price, gas_buffer=GAS_BUFFER):
+    txn = {
+        'to': contract.address,
+        'gas': 2000000,  # Temporary gas value
+        'gasPrice': gas_price,
+        'nonce': nonce,
+        'data': contract.encodeABI(fn_name=fn_name, args=args)
+    }
+    gas_estimate = w3.eth.estimate_gas(txn)
+    txn['gas'] = int(gas_estimate * gas_buffer)
+    
+    try:
+        signed_txn = w3.eth.account.sign_transaction(txn, private_key)
+        return signed_txn
+    except Exception as e:
+        print(f"Error signing transaction for {fn_name}: {e}")
+        return None    

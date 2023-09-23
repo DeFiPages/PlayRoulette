@@ -1,6 +1,6 @@
 from enum import Enum
 from libs.read_accounts import read_accounts_from_csv
-from libs.eth_utils import w3,  roulette_address, roulette_abi, get_balance_cas, create_and_send_transaction
+from libs.my_eth_utils import w3,  roulette_address, roulette_abi, get_balance_cas, create_and_send_transaction
 
 
 roulette_contract = w3.eth.contract(address=roulette_address, abi=roulette_abi)
