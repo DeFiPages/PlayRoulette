@@ -32,20 +32,29 @@ def get_batch_transaction_receipts(transaction_hashes):
 
 
 # Specify the block range
-from_block = 27641 #27600
+from_block = 28348 #27641  # 27600
 to_block = w3.eth.block_number
 
 # Get all transaction hashes for each block for the specified contract address in the block range
 block_transactions = get_block_transactions(from_block, to_block, roulette_address)
 
+total_transactions_count = 0
 # Go through each block and print the results
 for block_number, block_data in block_transactions.items():
     tx_hashes = block_data["tx_hashes"]
     total_tx_count = block_data["total_tx_count"]
+
+    total_transactions_count += total_tx_count
 
     transaction_receipts = get_batch_transaction_receipts(tx_hashes)
 
     succeeded = sum(1 for receipt in transaction_receipts.values() if receipt and int(receipt['status'], 16) == 1)
     failed = len(tx_hashes) - succeeded
 
-    print(f"Block {block_number}: {succeeded} transactions to contract succeeded, {failed} transactions to contract failed, {total_tx_count} total transactions in block.")
+    print(
+        f"Block {block_number}: "
+        f"{succeeded} transactions succeeded, "
+        f"{failed} transactions failed, "
+        f"{total_tx_count} total transactions in block."
+    )
+print(f"Total transactions: {total_transactions_count}")
