@@ -1,11 +1,13 @@
-from libs.read_accounts import read_accounts_from_csv
-from libs.my_eth_utils import w3, roulette_address, roulette_abi
-from libs.eth_batch import get_batch_nonces, get_batch_cas_balance, create_signed_transaction
+import time
 import json
 import requests
 from enum import Enum
 
-roulette_contract = w3.eth.contract(address=roulette_address, abi=roulette_abi)
+from libs.read_accounts import read_accounts_from_csv
+from libs.my_eth_utils import w3, roulette_address, roulette_abi
+from libs.eth_batch import get_batch_nonces, get_batch_cas_balance, create_signed_transaction
+
+BATCH_SIZE = 10000  # Maximum number of addresses per batch
 
 
 class Color(Enum):
@@ -17,7 +19,7 @@ class Color(Enum):
 selected_color = Color.BLACK.value
 tokens_bet = 1
 
-BATCH_SIZE = 10000  # Maximum number of addresses per batch
+roulette_contract = w3.eth.contract(address=roulette_address, abi=roulette_abi)
 
 
 def estimate_gas(first_nonce, gas_price):
@@ -136,4 +138,9 @@ if __name__ == "__main__":
     current_block = w3.eth.block_number
     print(f"Current block number: {current_block}")
     accounts = read_accounts_from_csv()
+    start_time = time.time()  # Capture the start time
     play_roulette_batch(accounts)
+    end_time = time.time()  # Capture the end time
+
+    duration = end_time - start_time  # Calculate the duration
+    print(f"Duration of play_roulette_batch: {duration} seconds")
