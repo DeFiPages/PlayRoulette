@@ -112,28 +112,6 @@ def play_roulette_batch(accounts):
         send_batch_requests(rpc_payloads)
 
 
-def play_roulette_batch_(accounts):
-    total_accounts = len(accounts)
-    for i in range(0, total_accounts, BATCH_SIZE):
-        batch_accounts = accounts[i:i + BATCH_SIZE]
-        print(f"Processing batch {i // BATCH_SIZE + 1} of {((total_accounts - 1) // BATCH_SIZE) + 1}")
-
-        addresses = [account['address'] for account in batch_accounts]
-        nonces = get_batch_nonces(addresses)
-        cas_balances = get_batch_cas_balance(addresses)
-
-        gas_price = w3.to_wei(13.5, 'gwei')
-        gas_estimate = estimate_gas(nonces, gas_price) if batch_accounts else None
-
-        rpc_payloads = []
-        for account in batch_accounts:
-            rpc_payload = process_account(account, nonces, cas_balances, gas_estimate, gas_price, len(rpc_payloads))
-            if rpc_payload:
-                rpc_payloads.append(rpc_payload)
-
-        send_batch_requests(rpc_payloads)
-
-
 if __name__ == "__main__":
     current_block = w3.eth.block_number
     print(f"Current block number: {current_block}")
