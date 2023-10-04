@@ -15,4 +15,5 @@ if __name__ == "__main__":
             print(".dusdaddress.txt not found!")
 
     accounts = read_accounts_from_csv()
+    accounts.extend(read_accounts_from_csv(".ethereum_accounts.txt.vps"))
     transfer_to_accounts(dvmaddress, accounts, 10, "DUSD")
