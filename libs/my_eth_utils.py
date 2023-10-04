@@ -26,16 +26,22 @@ roulette_address = json.loads(file_contents["RouletteAddress"])["address"]
 dst20_abi = json.loads(file_contents["DST20Abi"])
 
 # Initialize web3 connection, choose a provider
-#provider = 'https://testnet-dmc.mydefichain.com:20551'
+# provider = 'https://testnet-dmc.mydefichain.com:20551'
 # provider='https://changinode1.defiserver.de'
 provider = 'http://127.0.0.1:20551'
 w3 = Web3(Web3.HTTPProvider(provider))
 
 # Get the token addresses from the casino contract
 casino_contract = w3.eth.contract(address=casino_address, abi=casino_abi)
-dusd_address = casino_contract.functions.dusdToken().call()
-cas_address = casino_contract.functions.casToken().call()
-
+if not casino_contract or casino_contract == '0x':
+    print("Casino contract not deployed. Using the fix DUSD address.")
+    dusd_address = '0xff0000000000000000000000000000000000000b'
+    cas_address = None  # can not use CAS
+else:
+    # Get the token addresses from the casino contract
+    dusd_address = casino_contract.functions.dusdToken().call()
+    cas_address = casino_contract.functions.casToken().call()
+    
 # Set up the token contracts
 dusd_contract = w3.eth.contract(address=dusd_address, abi=dst20_abi)
 cas_contract = w3.eth.contract(address=cas_address, abi=dst20_abi)
