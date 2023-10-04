@@ -17,7 +17,7 @@ def wait_for_confirmation(tx_hash):
 
 assert w3.is_connected()
 
-accounts = read_accounts_from_csv(".deployer_account.txt ")
+accounts = read_accounts_from_csv(".deployer_account.txt")
 
 YOUR_PRIVATE_KEY = accounts[0]['private_key']
 YOUR_OWNER_ADDRESS = accounts[0]['address']
