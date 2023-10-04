@@ -1,6 +1,14 @@
 from defichain import Node
+import time
 
-
+def wait_for_confirmation(node: Node, txid):
+    confirmations = 0
+    while confirmations == 0:
+        transaction = node.wallet.gettransaction(txid)
+        confirmations = transaction["confirmations"]
+        if confirmations == 0:
+            print(f"Transaction {txid} not yet confirmed. Waiting...")
+            time.sleep(60)  # Wait for 60 seconds before checking again
 
 def transferdomain(node: Node, src_address: str, amount: str, dst_address: str, to_dvm: bool = False) -> str:
     """
