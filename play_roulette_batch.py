@@ -23,7 +23,7 @@ roulette_contract = w3.eth.contract(address=roulette_address, abi=roulette_abi)
 
 
 def estimate_gas(first_nonce, gas_price):
-    if not first_nonce:
+    if first_nonce is None:
         raise ValueError("No valid nonce available for gas estimation")
 
     try:
@@ -102,7 +102,8 @@ def play_roulette_batch(accounts):
         batch_accounts = accounts[i:i + BATCH_SIZE]
         print(f"Processing batch {i // BATCH_SIZE + 1} of {((total_accounts - 1) // BATCH_SIZE) + 1}")
         gas_price = w3.to_wei(13.5, 'gwei')
-        gas_estimate = estimate_gas(batch_accounts[0]['nonce'], gas_price)
+        nonce = batch_accounts[0]['nonce']
+        gas_estimate = estimate_gas(nonce, gas_price)
         rpc_payloads = []
         for account in batch_accounts:
             rpc_payload = process_account(account, gas_estimate, gas_price, len(rpc_payloads))
