@@ -101,7 +101,7 @@ def play_roulette_batch(accounts):
     for i in range(0, total_accounts, BATCH_SIZE):
         batch_accounts = accounts[i:i + BATCH_SIZE]
         print(f"Processing batch {i // BATCH_SIZE + 1} of {((total_accounts - 1) // BATCH_SIZE) + 1}")
-        gas_price = w3.to_wei(13.5, 'gwei')
+        gas_price = w3.to_wei(350, 'gwei') # normal load 13.5
         nonce = batch_accounts[0]['nonce']
         gas_estimate = estimate_gas(nonce, gas_price)
         rpc_payloads = []
