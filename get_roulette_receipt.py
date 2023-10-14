@@ -32,7 +32,7 @@ def extract_relevant_txs(batch_blocks, contract_address):
 
 
 
-def get_block_transactions(from_block, to_block, contract_address, batch_size=100):
+def get_block_transactions(from_block, to_block, contract_address, batch_size=10):
     block_transactions = {}
     for start_block in range(from_block, to_block + 1, batch_size):
         end_block = min(start_block + batch_size - 1, to_block)
@@ -76,7 +76,7 @@ def get_batch_transaction_receipts(transaction_hashes):
     return receipts
 
 # Specify the block range
-from_block = 1500 # Example starting block number
+from_block = 1300 # Example starting block number
 to_block = w3.eth.block_number
 
 # Get all transaction hashes for each block for the specified contract address in the block range
