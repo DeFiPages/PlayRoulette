@@ -1,20 +1,23 @@
 from libs.my_eth_utils import w3, roulette_address
 from libs.eth_batch import send_batch_json_rpc_request
+import sys
 
 
 def get_block_transactions(from_block, to_block, contract_address):
     block_transactions = {}
     for block_number in range(from_block, to_block + 1):
+        if block_number % 100 == 0:
+            sys.stdout.write(f"Fetching transactions for block {block_number} out of {to_block}...\r")
+            sys.stdout.flush()
         block = w3.eth.get_block(block_number, full_transactions=True)
-        total_tx_count = w3.eth.get_block_transaction_count(block_number)
         tx_hashes = [tx.hash.hex() for tx in block.transactions if tx.to == contract_address]
-        if tx_hashes or total_tx_count:
+        total_tx_count = len(tx_hashes)
+        if tx_hashes:  # Only add blocks with tx to the specified contract address
             block_transactions[block_number] = {
                 "total_tx_count": total_tx_count,
                 "tx_hashes": tx_hashes,
             }
     return block_transactions
-
 
 def get_batch_transaction_receipts(transaction_hashes):
     method = 'eth_getTransactionReceipt'
@@ -30,9 +33,8 @@ def get_batch_transaction_receipts(transaction_hashes):
             receipts[tx_hash] = None
     return receipts
 
-
 # Specify the block range
-from_block = 28348 #27641  # 27600
+from_block = 1000 # Example starting block number
 to_block = w3.eth.block_number
 
 # Get all transaction hashes for each block for the specified contract address in the block range
@@ -49,7 +51,7 @@ for block_number, block_data in block_transactions.items():
     transaction_receipts = get_batch_transaction_receipts(tx_hashes)
 
     succeeded = sum(1 for receipt in transaction_receipts.values() if receipt and int(receipt['status'], 16) == 1)
-    failed = len(tx_hashes) - succeeded
+    failed = total_tx_count - succeeded
 
     print(
         f"Block {block_number}: "
