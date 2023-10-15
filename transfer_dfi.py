@@ -85,6 +85,6 @@ if __name__ == "__main__":
 
     accounts = read_accounts_from_csv()
     accounts.extend(read_accounts_from_csv(".ethereum_accounts.txt.vps"))
-    transfer_to_accounts(dvmaddress, accounts, 2, "DFI")
+    transfer_to_accounts(dvmaddress, accounts, 10, "DFI")
 
 
